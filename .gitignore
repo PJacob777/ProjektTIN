@@ -1,0 +1,85 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build files
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# IDE i edytory
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.log
+
+# System plików
+.DS_Store
+Thumbs.db
+
+# User-specific files
+*.rsuser
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Build results
+bin/
+obj/
+out/
+AppPackages/
+TestResults/
+
+# Azure DevOps
+# Including these files can cause corruption
+*.vssscc
+*.vspscc
+
+# Environment variables
+.env
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+.idea.modules/
+.idea/misc.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+.idea/sqlDataSources.xml
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/sqlDataSources.ids
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+.idea/deployment.xml
+.idea/jarRepositories.xml
+.idea/configs/
+.idea/modules.xml
+
+# System plików
+.DS_Store
+Thumbs.db
+
