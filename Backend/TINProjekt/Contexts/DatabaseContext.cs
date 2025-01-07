@@ -6,6 +6,7 @@ namespace TINProjekt.Contexts;
 public class DatabaseContext : DbContext
 {
   public DbSet<User> Users { get; set; }
+  public DbSet<RefreshToken> RefreshTokens { get; set; }
   protected DatabaseContext()
   {
 

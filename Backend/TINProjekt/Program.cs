@@ -1,12 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using TINProjekt.Contexts;
+using TINProjekt.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
 {
   opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
