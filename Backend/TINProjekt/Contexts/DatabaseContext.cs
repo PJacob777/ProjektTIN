@@ -7,6 +7,11 @@ public class DatabaseContext : DbContext
 {
   public DbSet<User> Users { get; set; }
   public DbSet<RefreshToken> RefreshTokens { get; set; }
+  public DbSet<Client> Clients { get; set; }
+  public DbSet<Order> Order { get; set; }
+  public DbSet<Product> Products { get; set; }
+  public DbSet<Token> Tokens { get; set; }
+
   protected DatabaseContext()
   {
 

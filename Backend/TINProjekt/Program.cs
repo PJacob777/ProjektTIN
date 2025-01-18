@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
 {
   opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
