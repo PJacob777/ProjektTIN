@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TINProjekt.Exception;
 using TINProjekt.Request;
@@ -24,6 +25,13 @@ public class ProductController(IProductService productService, IValidator<AddPro
     return Ok(product);
   }
 
+  [HttpGet]
+  public async Task<IActionResult> GetAllProducts()
+  {
+    var listOfProducts = await productService.GetAllProducts();
+    return Ok(listOfProducts);
+  }
+
   [HttpPost]
   public async Task<IActionResult> AddProduct([FromBody] AddProductRequest productRequest)
   {
@@ -35,7 +43,7 @@ public class ProductController(IProductService productService, IValidator<AddPro
 
     try
     {
-      productService.AddProduct(productRequest);
+      await productService.AddProduct(productRequest);
     }
     catch(AllreadyExistsException e)
     {
@@ -44,9 +52,78 @@ public class ProductController(IProductService productService, IValidator<AddPro
 
     return Ok();
   }
-  [HttpPatch("{name:string}")]
-  public async Task<IActionResult> UpdateProduct(string name)
+  [HttpPatch("{name:string}/name")]
+  public async Task<IActionResult> UpdateProductName(string name, string newName)
   {
-    return Ok();
+    try
+    {
+      await productService.UpdateProductName(name, newName);
+    }
+    catch (NotFoundProduct ex)
+    {
+      return NotFound("Nie ma takiego produktu");
+    }
+    catch (ArgumentException ex)
+    {
+      return BadRequest();
+    }
+    return NoContent();
+  }
+
+  [HttpPatch("{name:string}/description")]
+  public async Task<IActionResult> UpdateProductDescription(string name, string newDesccription)
+  {
+    try
+    {
+      await productService.UpdateProductDescription(name, newDesccription);
+    }
+    catch (ArgumentException ex)
+    {
+      return BadRequest();
+    }
+    catch (NotFoundProduct ex)
+    {
+      return NotFound();
+    }
+
+    return NoContent();
+  }
+
+  [HttpPatch("{name:string}/price")]
+  public async Task<IActionResult> UpdateProductPrice(string name, decimal newPrice)
+  {
+    try
+    {
+      await productService.UpdateProductCost(name, newPrice);
+    }
+    catch (NotFoundProduct e)
+    {
+      return NotFound();
+    }
+    catch (WrongPriceException ex)
+    {
+      return BadRequest();
+    }
+
+    return NoContent();
+  }
+
+  [HttpDelete("product/{name:string}")]
+  public async Task<IActionResult> RemoveProduct(string name)
+  {
+    try
+    {
+      await productService.DeleteProduct(name);
+    }
+    catch (NotFoundProduct e)
+    {
+      return NotFound();
+    }
+    catch (ArgumentException e)
+    {
+      return BadRequest();
+    }
+
+    return NoContent();
   }
 }

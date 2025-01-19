@@ -18,10 +18,10 @@ public class Order
 
   public string Number { get; set; }
 
-  [ForeignKey("Client")]
+  [ForeignKey("User")]
   public int IdClient { get; set; }
 
-  public Client Client { get; set; }
+  public User User { get; set; }
 
   public List<Product> Products { get; set; }
 }

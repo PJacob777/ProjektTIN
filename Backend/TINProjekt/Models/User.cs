@@ -19,5 +19,7 @@ public class User
 
   public string Role { get; set; }
 
+  public List<Order> Orders { get; set; }
+
   public List<Token> Tokens { get; set; }
 }
