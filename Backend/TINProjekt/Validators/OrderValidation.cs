@@ -9,7 +9,7 @@ public class OrderValidation : AbstractValidator<AddOrderRequest>
   {
     RuleFor(p => p.Products).NotEmpty().NotNull();
     RuleFor(p => p.Miasto).NotNull();
-    RuleFor(p => p.Number).NotNull();
+    RuleFor(p => p.Numer).NotNull();
     RuleFor(p => p.Ulica).NotNull();
   }
 }

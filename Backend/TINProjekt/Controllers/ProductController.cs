@@ -52,7 +52,7 @@ public class ProductController(IProductService productService, IValidator<AddPro
 
     return Ok();
   }
-  [HttpPatch("{name:string}/name")]
+  [HttpPatch("/name")]
   public async Task<IActionResult> UpdateProductName(string name, string newName)
   {
     try
@@ -70,7 +70,7 @@ public class ProductController(IProductService productService, IValidator<AddPro
     return NoContent();
   }
 
-  [HttpPatch("{name:string}/description")]
+  [HttpPatch("/description")]
   public async Task<IActionResult> UpdateProductDescription(string name, string newDesccription)
   {
     try
@@ -89,7 +89,7 @@ public class ProductController(IProductService productService, IValidator<AddPro
     return NoContent();
   }
 
-  [HttpPatch("{name:string}/price")]
+  [HttpPatch("/price")]
   public async Task<IActionResult> UpdateProductPrice(string name, decimal newPrice)
   {
     try
@@ -108,7 +108,7 @@ public class ProductController(IProductService productService, IValidator<AddPro
     return NoContent();
   }
 
-  [HttpDelete("product/{name:string}")]
+  [HttpDelete("/product")]
   public async Task<IActionResult> RemoveProduct(string name)
   {
     try

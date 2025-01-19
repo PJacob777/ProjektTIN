@@ -10,5 +10,5 @@ public class AddOrderRequest
 
   public string Ulica { get; set; }
 
-  public string Number { get; set; }
+  public string Numer { get; set; }
 }
