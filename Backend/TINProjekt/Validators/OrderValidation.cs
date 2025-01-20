@@ -11,5 +11,6 @@ public class OrderValidation : AbstractValidator<AddOrderRequest>
     RuleFor(p => p.Miasto).NotNull();
     RuleFor(p => p.Numer).NotNull();
     RuleFor(p => p.Ulica).NotNull();
+    RuleFor(p => p.ID).NotNull().GreaterThan(0);
   }
 }

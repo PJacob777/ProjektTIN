@@ -4,6 +4,7 @@ namespace TINProjekt.Request;
 
 public class AddOrderRequest
 {
+  public int ID { get; set; }
   public List<string> Products { get; set; }
 
   public string Miasto { get; set; }
