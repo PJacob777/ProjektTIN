@@ -13,6 +13,7 @@ public class Product
   public string Description { get; set; }
 
   public Decimal Csst { get; set; }
+  public string PictLink { get; set; }
 
   public List<Order> Orders { get; set; }
 }
