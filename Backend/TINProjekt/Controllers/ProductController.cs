@@ -26,10 +26,29 @@ public class ProductController(IProductService productService, IValidator<AddPro
   }
 
   [HttpGet]
-  public async Task<IActionResult> GetAllProducts()
+  public async Task<IActionResult> GetAllProducts([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
   {
+    if (page <= 0 || pageSize <= 0)
+    {
+      return BadRequest("Numer strony i rozmiar strony muszą być większe od 0.");
+    }
+
     var listOfProducts = await productService.GetAllProducts();
-    return Ok(listOfProducts);
+
+    // Paginacja: wybierz tylko produkty z danej strony
+    var paginatedProducts = listOfProducts
+      .Skip((page - 1) * pageSize)
+      .Take(pageSize)
+      .ToList();
+
+    return Ok(new
+    {
+      Page = page,
+      PageSize = pageSize,
+      TotalItems = listOfProducts.Count,
+      TotalPages = (int)Math.Ceiling((double)listOfProducts.Count / pageSize),
+      Products = paginatedProducts
+    });
   }
 
   [HttpPost]

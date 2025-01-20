@@ -1,5 +1,5 @@
 // URL Twojego API
-const API_URL = "http://localhost:5000/api/Product/product"; // Zmień na właściwy adres, jeśli Twój back-end działa pod innym URL-em
+const API_URL = "http://localhost:5180/api/Product?page=1&pageSize=3"; // Zmień na właściwy adres, jeśli Twój back-end działa pod innym URL-em
 
 // Funkcja do pobrania produktów z API
 async function fetchProducts() {
@@ -12,9 +12,9 @@ async function fetchProducts() {
       throw new Error("Błąd podczas pobierania danych: " + response.status);
     }
 
-    const products = await response.json();
-    console.log("Pobrane produkty:", products);
-    displayProducts(products);
+    const page = await response.json();
+    console.log("Pobrany page:", page);
+    displayProducts(page.products);
   } catch (error) {
     console.error("Błąd:", error);
     const productContainer = document.querySelector(".products");
@@ -50,3 +50,22 @@ function addToCart(productId) {
 
 // Wywołaj pobranie produktów po załadowaniu strony
 document.addEventListener("DOMContentLoaded", fetchProducts);
+
+document.addEventListener("DOMContentLoaded", () => {
+  const authButton = document.getElementById("auth-button");
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn === "true") {
+    // Jeśli użytkownik jest zalogowany, zmień przycisk na "Wyloguj się"
+    authButton.textContent = "Wyloguj się";
+    authButton.href = "#"; // Zablokowanie przekierowania na stronę logowania
+    authButton.addEventListener("click", () => {
+      // Obsługa wylogowania
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      localStorage.setItem("isLoggedIn", "false");
+      alert("Wylogowano pomyślnie!");
+      window.location.reload(); // Odśwież stronę po wylogowaniu
+    });
+  }
+});
