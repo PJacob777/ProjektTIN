@@ -26,7 +26,7 @@ public class OrderController(IOrderService orderService, IValidator<AddOrderRequ
     }
     catch (NotFoundUserException e)
     {
-      return BadRequest();
+      return BadRequest(e.Message);
     }
     catch (NotFoundProduct ex)
     {

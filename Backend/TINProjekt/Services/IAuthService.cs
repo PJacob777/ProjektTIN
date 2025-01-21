@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
         Task<ResponseLogin> LoginAsync(LoginRequest model);
         Task<ResponseLogin> RefreshTokenAsync(string refreshToken);
         Task<bool> RegisterAsync(RegisterRequest model);
+        Task<int> GetID(string token);
     }
 
     public class AuthService(IConfiguration config, DatabaseContext dbContext) : IAuthService
@@ -164,4 +165,50 @@ using Microsoft.IdentityModel.Tokens;
 
             return hashed == storedHash;
         }
+
+        public async Task<int> GetID(string token)
+        {
+          if (string.IsNullOrEmpty(token))
+          {
+            throw new ArgumentException("Token cannot be null or empty.");
+          }
+
+          // Parsowanie tokenu JWT
+          var tokenHandler = new JwtSecurityTokenHandler();
+          JwtSecurityToken jwtToken;
+          try
+          {
+            jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
+          }
+          catch
+          {
+            throw new ArgumentException("Invalid token format.");
+          }
+
+          if (jwtToken == null || !jwtToken.Claims.Any())
+          {
+            throw new ArgumentException("Token does not contain valid claims.");
+          }
+
+          // Wyszukiwanie użytkownika na podstawie claimu `sub` (ID użytkownika)
+          var userEmailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
+
+          if (string.IsNullOrEmpty(userEmailClaim))
+          {
+            throw new ArgumentException("Token does not contain a valid user identifier.");
+          }
+
+          // Pobranie użytkownika z bazy danych
+          var user = await dbContext.Users
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Email == userEmailClaim);
+
+          if (user == null)
+          {
+            throw new ArgumentException("User not found for the provided token.");
+          }
+
+          return user.UserId;
+        }
+
     }

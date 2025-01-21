@@ -26,6 +26,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<OrderValidation>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddDbContext<DatabaseContext>(opt =>
 {
   opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));

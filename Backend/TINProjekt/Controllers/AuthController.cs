@@ -50,6 +50,21 @@ public class AuthControler(IAuthService authService) : ControllerBase
     return BadRequest("Username already exists");
   }
 
+  [HttpGet("/id")]
+  public async Task<IActionResult> GetIDOfUser(string token)
+  {
+    var number = 0;
+    try
+    {
+      number = await authService.GetID(token);
+    }
+    catch (ArgumentException e)
+    {
+      return BadRequest(e.Message);
+    }
+
+    return Ok(number);
+  }
 }
 
 

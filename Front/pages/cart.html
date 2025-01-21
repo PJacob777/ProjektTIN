@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Koszyk - Detailing Shop</title>
+  <link rel="stylesheet" href="../css/cart.css">
+</head>
+<body>
+<header>
+  <h1>Detailing Shop - Koszyk</h1>
+</header>
+<nav>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="products.html">Produkty</a>
+    <a href="aboutUs.html">O nas</a>
+    <a href="contact.html">Kontakt</a>
+  </div>
+  <a href="loginPage.html" class="login">Zaloguj się</a>
+</nav>
+<main>
+  <section class="cart">
+    <!-- Koszyk zostanie wypełniony dynamicznie -->
+  </section>
+  <button id="clear-cart">Wyczyść koszyk</button>
+  <div class="order-form">
+    <h2>Formularz zamówienia</h2>
+    <label for="city">Miasto:</label>
+    <input type="text" id="city" required>
+    <label for="street">Ulica:</label>
+    <input type="text" id="street" required>
+    <label for="number">Numer:</label>
+    <input type="text" id="number" required>
+    <button id="submit-order">Złóż zamówienie</button>
+  </div>
+
+</main>
+<footer>
+  <p>&copy; 2024 Detailing Shop. Wszelkie prawa zastrzeżone.</p>
+</footer>
+<script src="../Skrypty/cart.js"></script>
+</body>
+</html>
