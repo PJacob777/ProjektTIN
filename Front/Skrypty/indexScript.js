@@ -43,29 +43,56 @@ function displayProducts(products) {
   });
 }
 
-// Funkcja dodająca produkt do koszyka (prosta implementacja)
+// Funkcja dodająca produkt do koszyka
 function addToCart(productId) {
-  console.log("Dodano produkt do koszyka, ID:", productId);
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  if (isLoggedIn === "true") {
+    // Pobierz istniejące produkty w koszyku
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Dodaj nowy produkt do koszyka
+    if (!cart.includes(productId)) {
+      cart.push(productId);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Produkt został dodany do koszyka!");
+      console.log("Aktualny koszyk:", cart);
+    } else {
+      alert("Ten produkt już znajduje się w koszyku.");
+    }
+  } else {
+    alert("Musisz być zalogowany, aby dodać produkty do koszyka.");
+  }
 }
 
-// Wywołaj pobranie produktów po załadowaniu strony
-document.addEventListener("DOMContentLoaded", fetchProducts);
-
+// Obsługa logowania/wylogowania
 document.addEventListener("DOMContentLoaded", () => {
   const authButton = document.getElementById("auth-button");
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   if (isLoggedIn === "true") {
-    // Jeśli użytkownik jest zalogowany, zmień przycisk na "Wyloguj się"
+    // Jeśli użytkownik jest zalogowany
     authButton.textContent = "Wyloguj się";
     authButton.href = "#"; // Zablokowanie przekierowania na stronę logowania
-    authButton.addEventListener("click", () => {
-      // Obsługa wylogowania
-      localStorage.removeItem("token");
-      localStorage.removeItem("refreshToken");
-      localStorage.setItem("isLoggedIn", "false");
-      alert("Wylogowano pomyślnie!");
-      window.location.reload(); // Odśwież stronę po wylogowaniu
+    authButton.addEventListener("click", (event) => {
+      event.preventDefault(); // Zablokowanie domyślnego działania linku
+      logoutUser();
     });
+  } else {
+    // Jeśli użytkownik nie jest zalogowany
+    authButton.textContent = "Zaloguj się";
+    authButton.href = "loginPage.html"; // Przekierowanie na stronę logowania
   }
 });
+
+// Funkcja do wylogowania użytkownika
+function logoutUser() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("refreshToken");
+  localStorage.setItem("isLoggedIn", "false");
+  alert("Wylogowano pomyślnie!");
+  window.location.href = "index.html";
+}
+
+// Wywołaj pobranie produktów po załadowaniu strony
+document.addEventListener("DOMContentLoaded", fetchProducts);
