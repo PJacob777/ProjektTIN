@@ -3,11 +3,11 @@ async function checkPermissions() {
 
   if (!token) {
     console.error("Brak tokena w localStorage. Użytkownik niezalogowany.");
-    displayUnauthorizedMessage(); // Wyświetl 401 Unauthorized
+    displayUnauthorizedMessage();
     return;
   }
 
-  const url = "http://localhost:5180/auth"; // Endpoint weryfikacji
+  const url = "http://localhost:5180/auth";
   const headers = {
     "Content-Type": "application/json",
   };
