@@ -31,8 +31,6 @@ function displayUnauthorizedMessage() {
     <div style="text-align: center; margin-top: 20vh; font-family: Arial, sans-serif;">
       <h1 style="color: red;">401 Unauthorized</h1>
       <p>Nie masz uprawnień do wyświetlenia tej strony.</p>
-      <p>Zaloguj się na konto z odpowiednimi uprawnieniami.</p>
-      <a href="login.html" style="color: blue; text-decoration: underline;">Przejdź do strony logowania</a>
     </div>
   `;
 }
