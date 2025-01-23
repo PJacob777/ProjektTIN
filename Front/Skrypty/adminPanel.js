@@ -14,12 +14,8 @@ async function checkPermissions() {
   const body = JSON.stringify({ token });
 
   try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: headers,
-      body: body,
-    });
-
+    const response = await fetch(`http://localhost:5180/auth?token=${token}`);
+    console.log(response);
     if (response.ok) {
       console.log("Dostęp przyznany. Kontynuowanie ładowania strony...");
       return;
