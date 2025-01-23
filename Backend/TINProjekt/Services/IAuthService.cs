@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
         Task<ResponseLogin> RefreshTokenAsync(string refreshToken);
         Task<bool> RegisterAsync(RegisterRequest model);
         Task<int> GetID(string token);
+        Task<bool> GetAuthorisation(string token);
     }
 
     public class AuthService(IConfiguration config, DatabaseContext dbContext) : IAuthService
@@ -173,7 +174,6 @@ using Microsoft.IdentityModel.Tokens;
             throw new ArgumentException("Token cannot be null or empty.");
           }
 
-          // Parsowanie tokenu JWT
           var tokenHandler = new JwtSecurityTokenHandler();
           JwtSecurityToken jwtToken;
           try
@@ -190,7 +190,6 @@ using Microsoft.IdentityModel.Tokens;
             throw new ArgumentException("Token does not contain valid claims.");
           }
 
-          // Wyszukiwanie użytkownika na podstawie claimu `sub` (ID użytkownika)
           var userEmailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
 
           if (string.IsNullOrEmpty(userEmailClaim))
@@ -198,7 +197,6 @@ using Microsoft.IdentityModel.Tokens;
             throw new ArgumentException("Token does not contain a valid user identifier.");
           }
 
-          // Pobranie użytkownika z bazy danych
           var user = await dbContext.Users
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Email == userEmailClaim);
@@ -211,4 +209,20 @@ using Microsoft.IdentityModel.Tokens;
           return user.UserId;
         }
 
+        public async Task<bool> GetAuthorisation(string token)
+        {
+          var userId = await GetID(token);
+          var role = await dbContext.Users.Where(u => u.UserId == userId).Select(u => u.Role).FirstOrDefaultAsync();
+          if (role is null)
+          {
+            return false;
+          }
+
+          if (!role.Equals("admin"))
+          {
+            return false;
+          }
+
+          return true;
+        }
     }

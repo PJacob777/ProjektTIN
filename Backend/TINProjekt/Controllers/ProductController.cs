@@ -35,7 +35,6 @@ public class ProductController(IProductService productService, IValidator<AddPro
 
     var listOfProducts = await productService.GetAllProducts();
 
-    // Paginacja: wybierz tylko produkty z danej strony
     var paginatedProducts = listOfProducts
       .Skip((page - 1) * pageSize)
       .Take(pageSize)

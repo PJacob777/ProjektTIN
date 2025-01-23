@@ -1,10 +1,7 @@
-// URL Twojego API (zmień, jeśli jest inny)
 const API_URL = "http://localhost:5180/api/Product";
 
-// Zmienna do przechowywania aktualnej strony
 let currentPage = 1;
 
-// Funkcja do pobrania produktów z API
 async function fetchProducts(page = 1) {
   try {
     console.log(`Ładowanie danych z API dla strony ${page}...`);
@@ -26,10 +23,9 @@ async function fetchProducts(page = 1) {
   }
 }
 
-// Funkcja do wyświetlania produktów na stronie
 function displayProducts(products) {
   const productContainer = document.querySelector(".products");
-  productContainer.innerHTML = ""; // Wyczyść istniejącą zawartość
+  productContainer.innerHTML = "";
 
   if (!products || products.length === 0) {
     productContainer.innerHTML = "<p>Brak produktów do wyświetlenia.</p>";
@@ -50,10 +46,9 @@ function displayProducts(products) {
   });
 }
 
-// Funkcja do konfiguracji paginacji
 function setupPagination(totalPages) {
   const paginationContainer = document.querySelector(".pagination");
-  paginationContainer.innerHTML = ""; // Wyczyść istniejącą zawartość
+  paginationContainer.innerHTML = "";
 
   const prevButton = document.createElement("a");
   prevButton.href = "#";
@@ -92,7 +87,6 @@ function setupPagination(totalPages) {
   paginationContainer.appendChild(nextButton);
 }
 
-// Funkcja do obsługi dodawania do koszyka
 function addToCart(productId) {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
@@ -101,18 +95,15 @@ function addToCart(productId) {
     return;
   }
 
-  // Pobierz aktualny koszyk z localStorage
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  cart.push(productId); // Dodaj produkt do koszyka
-  localStorage.setItem("cart", JSON.stringify(cart)); // Zapisz koszyk
+  cart.push(productId);
+  localStorage.setItem("cart", JSON.stringify(cart));
   alert("Produkt został dodany do koszyka!");
 }
 
-// Wywołaj pobranie produktów po załadowaniu strony
 document.addEventListener("DOMContentLoaded", () => {
   fetchProducts();
 
-  // Obsługa zmiany przycisku logowania/wylogowania
   const authButton = document.querySelector(".login");
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 

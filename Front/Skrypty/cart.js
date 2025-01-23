@@ -1,7 +1,5 @@
-// URL Twojego API
 const API_URL = "http://localhost:5180/api/Product";
 
-// Funkcja do pobrania szczegółów produktu na podstawie ID
 async function fetchProductDetails(productId) {
   try {
     console.log(`Pobieranie szczegółów produktu o ID: ${productId}`);
@@ -21,7 +19,6 @@ async function fetchProductDetails(productId) {
   }
 }
 
-// Funkcja do pobrania produktów z koszyka
 async function fetchCartProducts() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   console.log("Pobrany koszyk z localStorage:", cart);
@@ -38,7 +35,6 @@ async function fetchCartProducts() {
   displayCartProducts(products);
 }
 
-// Funkcja do wyświetlania produktów w koszyku
 function displayCartProducts(products) {
   const cartContainer = document.querySelector(".cart");
   cartContainer.innerHTML = ""; // Wyczyść zawartość koszyka
@@ -72,13 +68,11 @@ function displayCartProducts(products) {
   totalElement.innerHTML = `<p><strong>Łączna suma: ${total.toFixed(2)} PLN</strong></p>`;
   cartContainer.appendChild(totalElement);
 
-  // Dodaj obsługę przycisków "Usuń"
   document.querySelectorAll(".remove-btn").forEach((button) => {
     button.addEventListener("click", removeFromCart);
   });
 }
 
-// Funkcja do usuwania produktu z koszyka
 function removeFromCart(event) {
   const productId = parseInt(event.target.getAttribute("data-id"));
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -87,7 +81,6 @@ function removeFromCart(event) {
   fetchCartProducts();
 }
 
-// Funkcja do składania zamówienia
 async function submitOrder() {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -143,13 +136,10 @@ async function submitOrder() {
   fetchCartProducts();
 }
 
-// Wywołaj pobranie produktów po załadowaniu strony
 document.addEventListener("DOMContentLoaded", fetchCartProducts);
 
-// Obsługa przycisku "Złóż zamówienie"
 document.getElementById("submit-order").addEventListener("click", submitOrder);
 
-// Obsługa przycisku "Wyczyść koszyk"
 document.getElementById("clear-cart").addEventListener("click", () => {
   localStorage.removeItem("cart");
   fetchCartProducts();

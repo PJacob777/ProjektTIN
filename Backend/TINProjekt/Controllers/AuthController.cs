@@ -65,6 +65,18 @@ public class AuthControler(IAuthService authService) : ControllerBase
 
     return Ok(number);
   }
+
+  [HttpGet("/auth")]
+  public async Task<IActionResult> GetAuthorisation(string token)
+  {
+    var result = await authService.GetAuthorisation(token);
+    if (!result)
+    {
+      return Unauthorized();
+    }
+
+    return Ok();
+  }
 }
 
 

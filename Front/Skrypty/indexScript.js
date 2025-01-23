@@ -1,7 +1,5 @@
-// URL Twojego API
 const API_URL = "http://localhost:5180/api/Product?page=1&pageSize=3"; // Zmień na właściwy adres, jeśli Twój back-end działa pod innym URL-em
 
-// Funkcja do pobrania produktów z API
 async function fetchProducts() {
   try {
     console.log("Ładowanie danych z API...");
@@ -22,10 +20,9 @@ async function fetchProducts() {
   }
 }
 
-// Funkcja do wyświetlania produktów na stronie
 function displayProducts(products) {
   const productContainer = document.querySelector(".products");
-  productContainer.innerHTML = ""; // Wyczyść istniejącą zawartość
+  productContainer.innerHTML = "";
 
   products.forEach(product => {
     console.log("Renderowanie produktu:", product);
@@ -43,15 +40,12 @@ function displayProducts(products) {
   });
 }
 
-// Funkcja dodająca produkt do koszyka
 function addToCart(productId) {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   if (isLoggedIn === "true") {
-    // Pobierz istniejące produkty w koszyku
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Dodaj nowy produkt do koszyka
     if (!cart.includes(productId)) {
       cart.push(productId);
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -65,27 +59,23 @@ function addToCart(productId) {
   }
 }
 
-// Obsługa logowania/wylogowania
 document.addEventListener("DOMContentLoaded", () => {
   const authButton = document.getElementById("auth-button");
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   if (isLoggedIn === "true") {
-    // Jeśli użytkownik jest zalogowany
     authButton.textContent = "Wyloguj się";
-    authButton.href = "#"; // Zablokowanie przekierowania na stronę logowania
+    authButton.href = "#";
     authButton.addEventListener("click", (event) => {
-      event.preventDefault(); // Zablokowanie domyślnego działania linku
+      event.preventDefault();
       logoutUser();
     });
   } else {
-    // Jeśli użytkownik nie jest zalogowany
     authButton.textContent = "Zaloguj się";
-    authButton.href = "loginPage.html"; // Przekierowanie na stronę logowania
+    authButton.href = "loginPage.html";
   }
 });
 
-// Funkcja do wylogowania użytkownika
 function logoutUser() {
   localStorage.removeItem("token");
   localStorage.removeItem("refreshToken");
@@ -94,5 +84,4 @@ function logoutUser() {
   window.location.href = "index.html";
 }
 
-// Wywołaj pobranie produktów po załadowaniu strony
 document.addEventListener("DOMContentLoaded", fetchProducts);
