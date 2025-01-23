@@ -7,12 +7,6 @@ async function checkPermissions() {
     return;
   }
 
-  const url = "http://localhost:5180/auth";
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  const body = JSON.stringify({ token });
-
   try {
     const response = await fetch(`http://localhost:5180/auth?token=${token}`);
     console.log(response);
